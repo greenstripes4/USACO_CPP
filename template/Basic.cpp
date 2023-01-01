@@ -30,9 +30,16 @@ struct student //声明一个名为student的结构体类型
 	char name[20]; //姓名
 	char sex;	   //性别
 	float score;   //成绩
+	bool operator<(student other) const //语法要求必须重载成常成员函数
+	{
+		if(score!=other.score) return score>other.score;
+		else return ID<other.ID;
+	}
 };				   //声明结束，注意此处不可省略分号
 
-int Cmp(student a, student b)
+//sort(a, a+n-1, cmp)
+//cmp return true的关系表示不需要交换
+bool cmp(student a, student b)
 {
 	if (a.score != b.score)
 		return a.score < b.score; //如果a.score不等于b.score，就按x从小到大排序
@@ -125,6 +132,8 @@ void stringSample()
 	string v = s.substr(4, 3);	//取s中第4个字符后的3个字符给v
 	cout << v << endl;			//输出"G,M"
 	cout << v.length() << endl; //输出3,即v的长
+	s += to_string(1234);		//int to string
+	reverse(s.begin(), s.end()); //反转字符串
 
 	// cin读取一行字符串时，遇到空格就会停止。如果读取一行包含空格符的字符串，可以使用getline()函数。
 	string sa, sb;
@@ -547,6 +556,23 @@ struct thing
 	{
 		return a < rhs.a;
 	}
+	
+	thing(){} //如果定义了构造函数，就必须有缺省构造函数
+	thing(int _a, char _b){
+		this->a = _a;
+		this->b = _b;
+	}
+
+	void hello(){
+		cout<<a<<endl;
+	}
+};
+
+// priority_queue<int,vector<int>,pqcmp>
+struct pqcmp{
+    bool operator()(int a, int b){
+        return a > b;
+    }
 };
 
 void priorityQueueSample()
